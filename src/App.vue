@@ -4,13 +4,14 @@
      <v-app-bar
          app
          color="#ffffff"
-         height="110"
+         height="75"
      >
        <v-row>
          <v-col
           cols="auto"
+          class="my-1 ml-10"
          >
-           <img src="@/assets/logo/logo_transparent.png" height="245" class="my-1" style="pointer-events: none;">
+           <img src="@/assets/logo/logo.svg" height="65" class="my-1" style="pointer-events: none;">
          </v-col>
          <v-spacer></v-spacer>
        </v-row>
@@ -357,6 +358,7 @@
            </v-responsive>
 
            <v-theme-provider light>
+
              <v-row>
                <v-col cols="12">
                  <v-text-field
