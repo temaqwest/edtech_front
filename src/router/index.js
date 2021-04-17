@@ -2,7 +2,10 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import JobReg from '../views/job_register.vue'
-import UniReg from '../views/uni_register.vue'
+import Vacancies from '../views/Vacancies.vue'
+import Internships from '../views/Internships.vue'
+import Profile from '../views/Profile.vue'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -13,23 +16,25 @@ const routes = [
     component: Home
   },
   {
+    path: '/internships',
+    name: 'Internships',
+    component: Internships
+  },
+  {
     path: '/job_reg',
     name: 'JobReg',
     component: JobReg
   },
   {
-    path: '/uni_reg',
-    name: 'UniReg',
-    component: UniReg
+    path: '/vacancies',
+    name: 'Vacancies',
+    component: Vacancies
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    path: '/profile',
+    name: 'Profile',
+    component: Profile
+  },
 ]
 
 const router = new VueRouter({
@@ -37,5 +42,14 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach(async function(to, from, next) {
+  const statusRestoring =  window.localStorage.logged;
+  if (!statusRestoring && to.name !== 'JobReg') {
+    next({name: 'JobReg'})
+  }
+  await store.dispatch('user/getUser')
+  next()
+});
 
 export default router

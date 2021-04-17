@@ -1,13 +1,5 @@
 <template>
   <div class="auth_block">
-    <v-btn
-        dark
-        tile
-        class="radius12 px-5 py-3 login-btn"
-        to="/"
-    >
-      На главную
-    </v-btn>
     <v-card
         class="login-card mx-auto mt-10"
         max-width="500"
@@ -21,7 +13,7 @@
           <v-col
               cols="auto"
           >
-            <h1 class="title">Войти как работодатель</h1>
+            <h1 class="title">Войти</h1>
           </v-col>
           <v-col
               cols="auto"
@@ -48,7 +40,6 @@
               solo
               height="65px"
               class="text-field title font-weight-normal"
-              @keyup.enter="signIn"
           ></v-text-field>
           <v-btn
               dark
@@ -56,7 +47,7 @@
               tile
               color="#5B5294"
               class="radius12 px-5 py-3 login-btn"
-              @click="signIn"
+              @click="signIn()"
           >
             Войти
           </v-btn>
@@ -89,7 +80,7 @@
           <v-col
               cols="auto"
           >
-            <h1 class="title">Регистрация работодателя</h1>
+            <h1 class="title">Регистрация</h1>
           </v-col>
           <v-col
               cols="auto"
@@ -171,8 +162,16 @@
                  hint="Укажите ваш городы"
                  height="65px"
                  class="text-field title font-weight-normal"
+             ></v-text-field><v-text-field
+                 v-model="company"
+                 label="Название компании"
+                 type="text"
+                 required
+                 solo
+                 hint="Укажите название компании"
+                 height="65px"
+                 class="text-field title font-weight-normal"
              ></v-text-field>
-             <v-autocomplete></v-autocomplete>
            </v-col>
          </v-row>
           <v-btn
@@ -181,7 +180,6 @@
               tile
               color="#5B5294"
               class="radius12 px-5 py-3 login-btn"
-              @click="signUp"
           >
             Зарегистрироваться
           </v-btn>
@@ -206,10 +204,16 @@
 
 <script>
 
+// import axios from "axios";
+
+import {getUsers} from "@/api/users";
+
 export default {
   name: 'JobReg',
   data() {
     return {
+      urFaceSelect: '',
+      urFaceList: [],
       username: '',
       password: '',
       email: '',
@@ -224,7 +228,51 @@ export default {
     }
   },
   methods: {
-
+    // async doSearch() {
+    //   console.log(this.urFaceSelect)
+    //   const search = await axios.get('https://www.rusprofile.ru/ajax.php');
+    //   console.log(search)
+    // },
+    async signIn() {
+      const result = await getUsers();
+      this.allUsers = result.data;
+      console.log(this.allUsers)
+      this.allUsers.forEach(res => {
+        if(res.email === this.username) {
+          if(res.roles[0] === "ROLE_ORGANIZATION") {
+            const user = {
+              username: this.username,
+              email: res.email,
+              firstname: res.firstname,
+              lastname: res.lastname,
+              internshipResponses: res.internshipResponses,
+              university: [{
+                description: '',
+                address: '',
+                name: '',
+                rating: '',
+              }],
+              role: res.roles[0],
+              organization: res?.organization,
+            };
+            this.$store.dispatch('user/login', user);
+          } else {
+            const user = {
+              username: this.username,
+              email: res.email,
+              firstname: res.firstname,
+              lastname: res.lastname,
+              internshipResponses: res.internshipResponses,
+              university: res?.university,
+              role: res.roles[0],
+              organization: res?.organization,
+            };
+            this.$store.dispatch('user/login', user);
+          }
+        }
+      })
+      this.$router.push('/internships');
+    }
   },
   watch: {
     register_page() {

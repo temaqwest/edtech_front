@@ -12,34 +12,35 @@
     </v-app-bar>
     <v-navigation-drawer
         height="97%"
-        dark
+        light
         app
         class="navigator"
-        color="#564444"
+        color="#d4d4d4"
         v-model="drawer"
         :mobile-breakpoint="mobBreak"
     >
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title>
-            <v-img
-                src="@/assets/logo/logo_dark.svg"
-                height="66px"
-                contain
-            />
-          </v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+      <div class="nav-header-gradient">
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>
+              <v-img
+                  src="@/assets/logo/logo_dark.svg"
+                  height="66px"
+                  contain
+              />
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </div>
       <v-divider></v-divider>
       <v-list>
         <v-list-item two-line>
-          <v-list-item-avatar>
-            <v-icon large color="#C66651">mdi-account-circle</v-icon>
-          </v-list-item-avatar>
+            <v-icon x-large color="#5b5294" class="mr-3" v-if="this.$store.state.user.user.role === 'ROLE_UNIVERSITY'">mdi-school</v-icon>
+            <v-icon x-large color="#5b5294" class="mr-3" v-else>mdi-briefcase</v-icon>
 
           <v-list-item-content>
-            <v-list-item-title>Hello, <strong></strong></v-list-item-title>
-            <v-list-item-subtitle>Logged in</v-list-item-subtitle>
+            <v-list-item-title>Привет,</v-list-item-title>
+            <v-list-item-title><strong>{{ this.$store.state.user.user.firstname }} {{ this.$store.state.user.user.lastname }}</strong></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -49,16 +50,51 @@
       >
         <v-list-item
             class="px-5 mx-1"
-            v-for="(navItem, idx) in navItems"
-            :key="idx"
-            :to="navItem.path"
+            to="/internships"
             transition
         >
           <v-list-item-icon>
-            <v-icon>{{ navItem.icon }}</v-icon>
+            <v-icon>mdi-format-list-text</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title>{{ navItem.title }}</v-list-item-title>
+            <v-list-item-title>Стажировки</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item
+            class="px-5 mx-1"
+            to="/"
+            transition
+        >
+          <v-list-item-icon>
+            <v-icon>mdi-information</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>О нас</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item
+            class="px-5 mx-1"
+            to="/vacancies"
+            transition
+            v-if="this.$store.state.user.user.role === 'ROLE_ORGANIZATION'"
+        >
+          <v-list-item-icon>
+            <v-icon>mdi-briefcase</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Мои вакансии</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item
+            class="px-5 mx-1"
+            to="/profile"
+            transition
+        >
+          <v-list-item-icon>
+            <v-icon>mdi-align-vertical-bottom</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Мой профиль</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -67,10 +103,11 @@
           <v-btn
               block
               rounded
+              dark
               class="logout-btn"
-              @click="logout"
+              @click="logout()"
           >
-            Sign out
+            Выход
             <v-icon small>mdi-logout</v-icon>
           </v-btn>
         </div>
@@ -88,14 +125,18 @@ export default {
       drawer: null,
       mobBreak: 960,
       navItems: [
-        { title: "Products", icon: 'mdi-format-list-text', path: "/"},
-        { title: "About", icon: "mdi-information", path: "/about"},
-        { title: "Contact", icon: "mdi-message-question", path: "/contact"},
-        { title: "Cart", icon: "mdi-cart", path: "/cart"},
+        { title: "Стажировки", icon: 'mdi-format-list-text', path: "/internships", role: true},
+        { title: "Практики", icon: 'mdi-format-list-text', path: "/practice", role: true},
+        { title: "Мой профиль", icon: "mdi-information", path: "/profile", role: true},
+        { title: "Мои вакансии", icon: "mdi-message-question", path: "/vacancies", role: this.$store.state.user.user.role === 'ROLE_ORGANIZATION'},
       ],
     }
   },
   methods: {
+    logout() {
+      this.$store.dispatch('user/logout');
+      this.$router.push('/');
+    },
     isMobile() {
       return this.$vuetify.breakpoint.width < this.mobBreak;
     }
@@ -111,11 +152,11 @@ export default {
 }
 
 .logout-btn {
-  background: transparent linear-gradient(180deg, #C66651 0%, #b8412d 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(180deg, #5B5294 0%, #3f3586 100%) 0% 0% no-repeat padding-box;
 }
 
 .app-header {
-  background: transparent linear-gradient(180deg, #C66651 0%, #b8412d 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(180deg, #5B5294 0%, #3f3586 100%) 0% 0% no-repeat padding-box;
 }
 
 </style>

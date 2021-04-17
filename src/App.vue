@@ -1,6 +1,8 @@
 <template>
  <div class="all-content">
-   <v-app v-if="this.$route.name === 'Home'">
+   <v-app
+       v-if="this.$route.name === 'Home'"
+   >
      <v-app-bar
          app
          dark
@@ -14,6 +16,15 @@
            <img src="@/assets/logo/logo_dark.svg" height="65" class="my-1" style="pointer-events: none;">
          </v-col>
          <v-spacer></v-spacer>
+         <v-col
+             class="mt-6 ml-10"
+             cols="2"
+         >
+           <v-btn
+               outlined
+               to="/internships"
+           >Перейти в сервис</v-btn>
+         </v-col>
        </v-row>
      </v-app-bar>
 
@@ -349,7 +360,7 @@
                      <v-btn
                          rounded
                          dark
-                         to="uni_reg"
+                         to="job_reg"
                      >Зарегистрироваться</v-btn>
                    </div>
                  </v-card>
@@ -415,7 +426,7 @@
 <!--         </v-col>-->
 <!--       </v-row>-->
 <!--     </v-snackbar>-->
-     <Navigation></Navigation>
+     <Navigation v-if="this.$store.state.user.isAuth"></Navigation>
      <v-main>
        <v-container fluid>
          <router-view></router-view>
@@ -483,7 +494,7 @@ export default {
 <style lang="scss">
 
 .body {
-
+  background-color: #5B529425 !important;
 }
 
 .container {
@@ -506,6 +517,12 @@ export default {
   border-radius: 16px 16px 0 0 !important;
   min-height: 90px;
   padding: 20px 30px;
+  background: #5B5294;
+  color: #fff;
+}
+
+.nav-header-gradient {
+  border-radius: 0 16px 0 0 !important;
   background: #5B5294;
   color: #fff;
 }
@@ -540,6 +557,10 @@ export default {
 
 .v-sheet.v-snack__wrapper:not(.v-sheet--outlined) {
   border: 2px solid #5B5294 !important;
+}
+
+.v-card {
+  border-radius: 16px !important;
 }
 </style>
 
