@@ -1,23 +1,23 @@
 <template>
  <div class="all-content">
-   <v-app>
+   <v-app v-if="this.$route.name === 'Home'">
      <v-app-bar
          app
-         color="#ffffff"
-         height="75"
+         dark
+         height="78"
      >
        <v-row>
          <v-col
           cols="auto"
           class="my-1 ml-10"
          >
-           <img src="@/assets/logo/logo.svg" height="65" class="my-1" style="pointer-events: none;">
+           <img src="@/assets/logo/logo_dark.svg" height="65" class="my-1" style="pointer-events: none;">
          </v-col>
          <v-spacer></v-spacer>
        </v-row>
      </v-app-bar>
 
-     <v-content>
+     <v-main>
        <section id="hero">
          <v-row no-gutters>
            <v-img
@@ -27,7 +27,6 @@
              <v-theme-provider>
                <v-container>
                  <v-row
-                     align="start"
                      class="white--text mx-auto"
                      style="margin-top:200px; width: 800px;"
                      justify="center"
@@ -91,14 +90,6 @@
 
        <section id="about-me" style="background-color: #5B529470;">
          <div class="py-12"></div>
-         <v-lazy
-             v-model="isActive"
-             :options="{
-          threshold: .9
-        }"
-             min-height="200"
-             transition="fade-transition"
-         >
            <v-container class="text-center">
              <h2 style="color: #5B5294;" class="display-2 font-weight-bold mb-3">О нашей команде</h2>
 
@@ -114,6 +105,7 @@
              <v-responsive
                  class="mx-auto title font-weight-light mb-8"
                  max-width="720"
+                 style="color: #000;"
              >
                Привет! Мы команда "Bruh" из города Ставрополь. Больше всего нашу команду
                впечатляют кейсы, которые в первую очередь помогают решить известные нам самим проблемы.
@@ -125,7 +117,6 @@
              <v-row
               no-gutters
               justify="center"
-              align="middle"
               class="mb-10"
              >
                <v-col>
@@ -185,18 +176,8 @@
                </v-col>
              </v-row>
            </v-container>
-         </v-lazy>
-
          <div class="py-12"></div>
        </section>
-       <v-lazy
-           v-model="isActive2"
-           :options="{
-          threshold: .9
-        }"
-           min-height="200"
-           transition="fade-transition"
-       >
          <section
              id="features"
              class="grey lighten-3"
@@ -204,7 +185,7 @@
            <div class="py-12"></div>
 
            <v-container class="text-center">
-             <h2 class="display-2 font-weight-bold mb-3">Наши особенности</h2>
+             <h2 class="display-2 font-weight-bold mb-3" style="color: #000;">Наши особенности</h2>
 
              <v-responsive
                  class="mx-auto mb-12"
@@ -242,7 +223,7 @@
                    </v-theme-provider>
 
                    <v-card-title
-                       class="justify-center font-weight-black text-uppercase"
+                       class="justify-center font-weight-black"
                        v-text="title"
                    ></v-card-title>
 
@@ -258,8 +239,6 @@
 
            <div class="py-12"></div>
          </section>
-       </v-lazy>
-
        <section id="stats">
          <v-parallax
              :height="$vuetify.breakpoint.smAndDown ? 700 : 500"
@@ -292,9 +271,8 @@
 
        <section id="blog">
          <div class="py-12"></div>
-
-         <v-container>
-           <h2 class="display-2 font-weight-bold mb-3 text-uppercase text-center">Blog</h2>
+         <v-container  style="color: #000;">
+           <h2 class="display-2 font-weight-bold mb-3 text-center">Что мы предлагаем</h2>
 
            <v-responsive
                class="mx-auto mb-12"
@@ -346,7 +324,7 @@
          <div class="py-12"></div>
 
          <v-container>
-           <h2 class="display-2 font-weight-bold mb-3 text-uppercase text-center">Зарегистрироваться</h2>
+           <h2 class="display-2 font-weight-bold mb-3 text-center">Вступить</h2>
 
            <v-responsive
                class="mx-auto mb-12"
@@ -358,50 +336,44 @@
            </v-responsive>
 
            <v-theme-provider light>
-
              <v-row>
-               <v-col cols="12">
-                 <v-text-field
-                     flat
-                     label="Name*"
-                     solo
-                 ></v-text-field>
+               <v-col cols="6"
+               class="text-center">
+                 <v-card color="#ffffff">
+                   <v-img
+                       src="https://regnum.ru/uploads/pictures/news/2019/10/23/regnum_picture_1571850452154204_normal.jpg"
+                       height="200px"
+                   ></v-img>
+                   <div class="pa-5">
+                     <h2 class="display-1 font-weight-bold mb-7">Вы представитель вуза?</h2>
+                     <v-btn
+                         rounded
+                         dark
+                         to="uni_reg"
+                     >Зарегистрироваться</v-btn>
+                   </div>
+                 </v-card>
                </v-col>
-
-               <v-col cols="12">
-                 <v-text-field
-                     flat
-                     label="Email*"
-                     solo
-                 ></v-text-field>
-               </v-col>
-
-               <v-col cols="12">
-                 <v-text-field
-                     flat
-                     label="Subject*"
-                     solo
-                 ></v-text-field>
-               </v-col>
-
-               <v-col cols="12">
-                 <v-textarea
-                     flat
-                     label="Message*"
-                     solo
-                 ></v-textarea>
-               </v-col>
-
-               <v-col
-                   class="mx-auto"
-                   cols="auto"
-               >
-                 <v-btn
-                     color="accent"
-                     x-large
+               <v-col cols="6"
+               class="text-center">
+                 <v-card
+                  color="#5B529460"
                  >
-                   Submit
-                 </v-btn>
+                   <v-img
+                       src="https://work4u.com.ua/wp-content/uploads/2020/07/Job-Offer.jpg"
+                       height="200px"
+                   ></v-img>
+                   <div class="pa-5">
+                     <h2 class="display-1 font-weight-bold mb-7 white--text">Вы работодатель?</h2>
+                     <v-btn
+                         outlined
+                         light
+                         color="#ffffff"
+                         rounded
+                         to="job_reg"
+                     >Зарегистрироваться</v-btn>
+                   </div>
+                 </v-card>
                </v-col>
              </v-row>
            </v-theme-provider>
@@ -409,8 +381,7 @@
 
          <div class="py-12"></div>
        </v-sheet>
-     </v-content>
-
+     </v-main>
      <v-footer
          class="justify-center"
          color="#292929"
@@ -421,34 +392,63 @@
        </div>
      </v-footer>
    </v-app>
+   <v-app class="body" v-else>
+<!--     <v-snackbar-->
+<!--         v-model="$store.getters.isLoading"-->
+<!--         timeout="-1"-->
+<!--         rounded="pill"-->
+<!--         color="#1e1e1e"-->
+<!--     >-->
+<!--       <v-row>-->
+<!--         <v-col-->
+<!--             cols="auto"-->
+<!--         >-->
+<!--           <v-progress-circular-->
+<!--               indeterminate-->
+<!--               color="#C66651"-->
+<!--           ></v-progress-circular>-->
+<!--         </v-col>-->
+<!--         <v-col-->
+<!--             cols="auto"-->
+<!--         >-->
+<!--           <h1 class="title">Loading</h1>-->
+<!--         </v-col>-->
+<!--       </v-row>-->
+<!--     </v-snackbar>-->
+     <Navigation></Navigation>
+     <v-main>
+       <v-container fluid>
+         <router-view></router-view>
+       </v-container>
+     </v-main>
+   </v-app>
  </div>
 </template>
 
 <script>
+import Navigation from '@/components/Navigation.vue'
 
 export default {
   name: 'App',
 
   components: {
-
+    Navigation
   },
 
   data: () => ({
-    isActive: false,
-    isActive2: false,
     articles: [
       {
-        src: 'https://images.unsplash.com/photo-1423784346385-c1d4dac9893a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80',
+        src: 'https://www.fonbuton.ru/wp-content/uploads/2020/08/1529333014_900_450_crop.jpg',
         title: 'Статистические данные',
         text: 'Phasellus lorem enim, luctus ut velit eget, convallis egestas eros. Sed ornare ligula eget tortor tempor, quis porta tellus dictum.',
       },
       {
-        src: 'https://images.unsplash.com/photo-1475938476802-32a7e851dad1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80',
+        src: 'https://vinbazar.com/sites/default/files/imagecache/690x/2012/11/302484.jpg',
         title: 'Разработанная модель классификаторов',
         text: 'Nam ut leo ipsum. Maecenas pretium aliquam feugiat. Aenean vel tempor est, vitae tincidunt risus. Sed sodales vestibulum nibh.',
       },
       {
-        src: 'https://images.unsplash.com/photo-1416339442236-8ceb164046f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1892&q=80',
+        src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_tVIv_A0SMkPhS1gtN4symgho5r1xAIGsRg&usqp=CAU',
         title: 'Объединеняет всех',
         text: 'Vestibulum in dictum velit, in rhoncus nibh. Maecenas neque libero, interdum a dignissim in, aliquet vitae lectus. Phasellus lorem enim, luctus ut velit eget.',
       },
@@ -479,3 +479,67 @@ export default {
   }),
 };
 </script>
+
+<style lang="scss">
+
+.body {
+
+}
+
+.container {
+  color: #fff;
+  margin: 0;
+}
+
+.radius12 {
+  border-radius: 12px !important;
+}
+.radius16 {
+  border-radius: 16px !important;
+}
+
+.card-template {
+  border-radius: 16px 16px 0 0 !important;
+}
+
+.header-gradient {
+  border-radius: 16px 16px 0 0 !important;
+  min-height: 90px;
+  padding: 20px 30px;
+  background: #5B5294;
+  color: #fff;
+}
+
+.footer-gradient {
+  border-radius: 0 0 16px 16px !important;
+  min-height: 40px;
+  padding: 20px 30px;
+  background: #5B5294;
+  color: #fff;
+}
+
+.container-trans {
+  background-color: #3F3F3F86 !important;
+}
+
+.content-gradient {
+  background: #5B5294;
+}
+.left-btn-template {
+  border-radius: 16px 0 0 16px !important;
+
+}
+.right-btn-template {
+  border-radius: 0 16px 16px 0 !important;
+}
+
+.button-group-template {
+  background: #ffffff00 !important;
+  border: none !important;
+}
+
+.v-sheet.v-snack__wrapper:not(.v-sheet--outlined) {
+  border: 2px solid #5B5294 !important;
+}
+</style>
+

@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import JobReg from '../views/job_register.vue'
+import UniReg from '../views/uni_register.vue'
 
 Vue.use(VueRouter)
 
@@ -9,6 +11,16 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/job_reg',
+    name: 'JobReg',
+    component: JobReg
+  },
+  {
+    path: '/uni_reg',
+    name: 'UniReg',
+    component: UniReg
   },
   {
     path: '/about',
