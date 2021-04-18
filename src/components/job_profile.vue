@@ -113,7 +113,7 @@
                   <h2 style="color:#0D1E29;margin-bottom:10px;" class="text-center">Доли компетенций в сервисе</h2>
                 </v-flex>
                 <v-divider></v-divider>
-                <div id="chart" style="max-width: 500px;">
+                <div id="chart" style="max-width: 800px;">
                   <apexchart type="donut" :options="chartOptions" :series="series"></apexchart>
                 </div>
               </v-container>

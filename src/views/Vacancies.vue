@@ -204,16 +204,19 @@ export default {
   },
   methods: {
     async createVac() {
+      this.newVacDateEnd = '2021-08-18T06:30:36.794Z';
+      this.newVacDateStart = '2021-12-18T06:30:36.794Z';
       const data = {
         "description": this.newVacDescription,
         "name": this.newVacName,
         "organization": '/api/organizations/' + this.$store.state.user.user.organization.id,
         "internshipResponses": [],
-        "dateStart": new Date(this.newVacDateStart).getTime(),
-        "dateEnd": new Date(this.newVacDateEnd).getTime()
+        "dateStart": this.newVacDateStart,
+        "dateEnd": this.newVacDateEnd
       };
       await createVacancies(data);
       console.log('Successfully created');
+      this.dialog = false;
     }
   },
   async mounted() {
