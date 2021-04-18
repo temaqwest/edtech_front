@@ -5,18 +5,141 @@
           align="start"
           justify="start"
       >
-        <v-col cols="8">
+        <v-col cols="10">
           <h1 class="display-1"><v-icon x-large color="white" class="mr-3" >mdi-clipboard-list</v-icon>Мои вакансии</h1>
+        </v-col>
+        <v-spacer></v-spacer>
+        <v-col cols="2">
+          <v-dialog
+              v-model="dialog"
+              persistent
+              max-width="600px"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                  class="add-btn radius12 mx-2 mb-2"
+                  dark
+                  tile
+                  v-bind="attrs"
+                  v-on="on"
+              >
+                Создать вакансию <v-icon medium>mdi-plus</v-icon>
+              </v-btn>
+            </template>
+            <v-card
+                class="add-card"
+                flat
+                style="background-color: #D4D4D4;"
+            >
+              <div class="add-header header-gradient">
+                <v-card-title>
+                  <span class="headline white--text">Создать вакансию</span>
+                </v-card-title>
+              </div>
+              <v-card-text>
+                <v-container class="add-content mx-2 my-5">
+                  <v-row>
+                    <v-col
+                        cols="12"
+                        sm="12"
+                    >
+                      <v-text-field
+                          label="Название"
+                          v-model="newVacName"
+                          hint="Название"
+                          required
+                          rounded
+                          solo
+                          flat
+                          height="65px"
+                          class="text-field"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col
+                        cols="12"
+                        sm="12"
+                    >
+                      <v-text-field
+                          label="Начало (2012-06-06)"
+                          v-model="newVacDateStart"
+                          hint="Начало"
+                          required
+                          rounded
+                          solo
+                          flat
+                          height="65px"
+                          class="text-field"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col
+                        cols="12"
+                        sm="12"
+                    >
+                      <v-text-field
+                          label="Конец (2012-07-18)"
+                          v-model="newVacDateEnd"
+                          hint="Конец"
+                          required
+                          rounded
+                          solo
+                          flat
+                          height="65px"
+                          class="text-field"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col
+                        cols="12"
+                        sm="12"
+                    >
+                      <v-textarea
+                          solo
+                          flat
+                          rounded
+                          hint="Описание"
+                          type="number"
+                          min-height="65px"
+                          class="text-field"
+                          label="Описание стажировки/практики"
+                          v-model="newVacDescription"
+                      ></v-textarea>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                    dark
+                    tile
+                    class="radius12 px-5 py-3 close-form-btn"
+                    @click="dialog = false"
+                >
+                  Close
+                </v-btn>
+                <v-btn
+                    dark
+                    tile
+                    class="radius12 px-5 py-3 create-form-btn"
+                    @click="createVac()"
+                >
+                  Save
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </v-col>
         <v-spacer></v-spacer>
       </v-row>
     </div>
     <v-container style="background-color: #D4D4D4;">
       <v-data-table
+          style="background-color: #ffffff00;"
           :headers="headers"
           :items="myVacancies"
-          class="elevation-1"
       >
+        <template v-slot:item.dateStart="{ item }">
+          {{ new Date(item.dateStart).toDateString() }}
+        </template>
         <template v-slot:item.requiredSkills="{ item }">
           <v-chip
               class="mx-1"
@@ -39,7 +162,7 @@
         </template>
         <template v-slot:no-data>
           <v-btn
-              color="primary"
+              outlined
           >
             Reset
           </v-btn>
@@ -52,13 +175,17 @@
 </template>
 
 <script>
-import {getMyVacancies} from "@/api/internships";
+import {createVacancies, getMyVacancies} from "@/api/internships";
 
 export default {
   name: 'Vacancies',
   data() {
     return {
       myVacancies: [],
+      newVacName: '',
+      newVacDescription: '',
+      newVacDateStart: '',
+      newVacDateEnd: '',
       dialog: false,
       dialogDelete: false,
       headers: [
@@ -76,11 +203,23 @@ export default {
     }
   },
   methods: {
-
+    async createVac() {
+      const data = {
+        "description": this.newVacDescription,
+        "name": this.newVacName,
+        "organization": '/api/organizations/' + this.$store.state.user.user.organization.id,
+        "internshipResponses": [],
+        "dateStart": new Date(this.newVacDateStart).getTime(),
+        "dateEnd": new Date(this.newVacDateEnd).getTime()
+      };
+      await createVacancies(data);
+      console.log('Successfully created');
+    }
   },
   async mounted() {
     const myvac = await getMyVacancies(this.$store.state.user.user.organization.id);
     this.myVacancies = myvac.data;
+    console.log(new Date('2012/06/05').getTime())
   }
 }
 </script>
@@ -88,6 +227,14 @@ export default {
 <style lang="scss" scoped>
 .headline {
   color: #5B5294 !important;
+}
+
+.close-form-btn {
+  background: transparent linear-gradient(180deg, #7d5294 0%, #355586 100%) 0% 0% no-repeat padding-box;
+}
+
+.create-form-btn {
+  background: transparent linear-gradient(180deg, #5B5294 0%, #358649 100%) 0% 0% no-repeat padding-box;
 }
 
 .add-btn {

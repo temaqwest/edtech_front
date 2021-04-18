@@ -6,6 +6,8 @@
      <v-app-bar
          app
          dark
+         flat
+         color="#1A1E1E"
          height="78"
      >
        <v-row>
@@ -39,7 +41,7 @@
                <v-container>
                  <v-row
                      class="white--text mx-auto"
-                     style="margin-top:200px; width: 800px;"
+                     style="margin-top:200px; width: 800px; background-color: #24242470;"
                      justify="center"
                      no-gutters
                  >
@@ -85,8 +87,8 @@
 
                    <v-btn
                        class="align-self-end mt-6"
-                       fab
-                       outlined
+                       x-large
+                       text
                        dark
                        @click="$vuetify.goTo('#about-me')"
                    >
@@ -139,7 +141,7 @@
                  </v-avatar>
                  <br>
                  <span><b>Татевосян Артём</b></span><br>
-                 <span>Front-End - разработчик</span>
+                 <span style="color: #1A1E1E;">Front-End - разработчик</span>
                </v-col>
                <v-col>
                  <v-avatar
@@ -150,7 +152,7 @@
                  </v-avatar>
                  <br>
                  <span><b>Булахов Никита</b></span><br>
-                 <span>Back-End - разработчик</span>
+                 <span style="color: #1A1E1E;">Back-End - разработчик</span>
                </v-col>
                <v-col>
                  <v-avatar
@@ -161,7 +163,7 @@
                  </v-avatar>
                  <br>
                  <span><b>Поляничев Артём</b></span><br>
-                 <span>IOS - разработчик</span>
+                 <span style="color: #1A1E1E;">IOS - разработчик</span>
                </v-col>
                <v-col>
                  <v-avatar
@@ -172,7 +174,7 @@
                  </v-avatar>
                  <br>
                  <span><b>Чеботарёв Кирилл</b></span><br>
-                 <span>Android разработчик</span>
+                 <span style="color: #1A1E1E;">Android разработчик</span>
                </v-col>
                <v-col>
                  <v-avatar
@@ -183,7 +185,7 @@
                  </v-avatar>
                  <br>
                  <span><b>Авдиенко Алла</b></span><br>
-                 <span>Аналитик</span>
+                 <span style="color: #1A1E1E;">Аналитик</span>
                </v-col>
              </v-row>
            </v-container>
@@ -404,28 +406,29 @@
      </v-footer>
    </v-app>
    <v-app class="body" v-else>
-<!--     <v-snackbar-->
-<!--         v-model="$store.getters.isLoading"-->
-<!--         timeout="-1"-->
-<!--         rounded="pill"-->
-<!--         color="#1e1e1e"-->
-<!--     >-->
-<!--       <v-row>-->
-<!--         <v-col-->
-<!--             cols="auto"-->
-<!--         >-->
-<!--           <v-progress-circular-->
-<!--               indeterminate-->
-<!--               color="#C66651"-->
-<!--           ></v-progress-circular>-->
-<!--         </v-col>-->
-<!--         <v-col-->
-<!--             cols="auto"-->
-<!--         >-->
-<!--           <h1 class="title">Loading</h1>-->
-<!--         </v-col>-->
-<!--       </v-row>-->
-<!--     </v-snackbar>-->
+     <v-snackbar
+         v-model="$store.getters.isLoading"
+         timeout="-1"
+         rounded="pill"
+         light
+         color="#d4d4d4"
+     >
+       <v-row>
+         <v-col
+             cols="auto"
+         >
+           <v-progress-circular
+               indeterminate
+               color="#5B5294"
+           ></v-progress-circular>
+         </v-col>
+         <v-col
+             cols="auto"
+         >
+           <h1 class="title">Loading</h1>
+         </v-col>
+       </v-row>
+     </v-snackbar>
      <Navigation v-if="this.$store.state.user.isAuth"></Navigation>
      <v-main>
        <v-container fluid>

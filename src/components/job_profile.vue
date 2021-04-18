@@ -26,14 +26,14 @@
                     <v-card-subtitle class="layout justify-center">{{ this.$store.state.user.user.organization.name }} / {{ this.$store.state.user.user.organization.city }}</v-card-subtitle>
                     <v-list>
                       <v-list-item>
-                        <v-list-item-title class="blue--text text--darken-1">Email</v-list-item-title>
-                        <v-list-item-title class="blue--text text--darken-1">Рейтинг компании</v-list-item-title>
-                        <v-list-item-title class="blue--text text--darken-1">Студентов <br> прикреплено</v-list-item-title>
+                        <v-list-item-title class="blue--text text--darken-1 mb-2">Email</v-list-item-title>
+                        <v-list-item-title class="blue--text text--darken-1 mb-2">Рейтинг <br> компании</v-list-item-title>
+                        <v-list-item-title class="blue--text text--darken-1 mb-2">Вакансий<br> создано</v-list-item-title>
                       </v-list-item>
                       <v-list-item class="mt-n5">
                         <v-list-item-subtitle>{{ this.$store.state.user.user.email }}</v-list-item-subtitle>
                         <v-list-item-subtitle>{{ this.$store.state.user.user.organization.rating }} из <b>5</b></v-list-item-subtitle>
-                        <v-list-item-subtitle> 34 </v-list-item-subtitle>
+                        <v-list-item-subtitle> {{ this.myLastVacancies.length }} </v-list-item-subtitle>
                       </v-list-item>
                     </v-list>
                   </v-card>
@@ -128,11 +128,14 @@
                     <v-list-item three-line :key="idx">
                       <v-list-item-content>
                         <v-row>
-                          <v-col cols="12">
+                          <v-col cols="10">
                             <v-list-item-title><v-icon left medium>mdi-arrow-up-drop-circle-outline</v-icon>{{ item.name }}</v-list-item-title>
                             <v-list-item-subtitle>
                               {{ item.description }}
                             </v-list-item-subtitle>
+                          </v-col>
+                          <v-col cols="2">
+                            {{ new Date(item.dateStart).toDateString() }}
                           </v-col>
                         </v-row>
                       </v-list-item-content>

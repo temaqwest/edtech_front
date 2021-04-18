@@ -114,6 +114,21 @@
                <strong>{{ item.organization.city }}</strong>/{{ item.organization.name }}
              </v-col>
              <v-col
+              cols="2"
+              lg="2"
+             >
+              <strong>
+                <v-icon
+                    medium
+                    color="#5B5294"
+                    class="mr-1"
+                >
+                  mdi-clock-time-five-outline
+                </v-icon>
+                {{ new Date(item.dateStart).toDateString()}}
+              </strong>
+             </v-col>
+             <v-col
               lg="2"
               cols="auto"
              >
